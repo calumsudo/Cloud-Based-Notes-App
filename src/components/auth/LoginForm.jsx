@@ -52,6 +52,8 @@ const LoginForm = ({ onToggleForm, authUser }) => {
     // ...
   });
   }
+
+
   return (
     <div className='form-box'>
       <form className='form' onSubmit={signIn}>
