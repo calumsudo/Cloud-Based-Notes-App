@@ -1,0 +1,122 @@
+.form-box {
+  max-width: 400px;
+  width: 100%; /* Ensure the form box takes up the full width */
+  background: #f1f7fe;
+  overflow: hidden;
+  border-radius: 24px;
+  color: #010101;
+}
+
+.form {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 48px 32px 32px; /* Increase the padding for more space */
+  gap: 24px; /* Increase the gap for more spacing between elements */
+  text-align: center;
+}
+
+.title {
+  font-weight: bold;
+  font-size: 2rem; /* Increase the font size for a bigger title */
+}
+
+.subtitle {
+  font-size: 1.2rem; /* Increase the font size for a bigger subtitle */
+  color: #666;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.input {
+  background: none;
+  border: 0;
+  outline: 0;
+  height: 48px; /* Increase the height for taller inputs */
+  width: 100%;
+  border-bottom: 1px solid #eee;
+  font-size: 1rem; /* Increase the font size for input text */
+  padding: 12px 20px; /* Increase the padding for more space */
+  margin-bottom: 16px; /* Add some spacing between stacked inputs */
+}
+
+.form-section {
+  padding: 24px; /* Increase the padding for more space */
+  font-size: 1rem; /* Increase the font size for form sections */
+  background-color: #e0ecfb;
+  box-shadow: rgb(0 0 0 / 8%) 0 -1px;
+}
+
+.form-section a {
+  font-weight: bold;
+  color: #0066ff;
+  transition: color .3s ease;
+}
+
+.form-section a:hover {
+  color: #005ce6;
+  text-decoration: underline;
+}
+
+.form button {
+  background-color: #0066ff;
+  color: #fff;
+  border: 0;
+  border-radius: 32px; /* Increase the border radius for a rounder button */
+  padding: 14px 24px; /* Increase the padding for a bigger button */
+  font-size: 1.2rem; /* Increase the font size for a bigger button */
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color .3s ease;
+}
+
+.form button:hover {
+  background-color: #005ce6;
+}
+
+.signupbutton {
+  background-color: #ffffff;
+  color: #000000;
+  border: 0;
+  border-radius: 32px; /* Increase the border radius for a rounder button */
+  padding: 7px 12px; /* Increase the padding for a bigger button */
+  font-size: 0.9rem; /* Increase the font size for a bigger button */
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color .3s ease;
+  border: 1px solid rgba(0, 0, 0, 0.25);
+}
+
+.button {
+  max-width: 320px;
+  display: flex;
+  padding: 0.5rem 1.4rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 700;
+  text-align: center;
+  text-transform: uppercase;
+  vertical-align: middle;
+  align-items: center;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  gap: 0.75rem;
+  color: rgb(65, 63, 63);
+  background-color: #fff;
+  cursor: pointer;
+  transition: all .6s ease;
+  margin-top: 20px;
+}
+
+.button svg {
+  height: 24px;
+}
+
+button:hover {
+  transform: scale(1.02);
+}

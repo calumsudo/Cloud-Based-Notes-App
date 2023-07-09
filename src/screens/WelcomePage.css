@@ -1,0 +1,46 @@
+.welcome-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-image: url(https://img.freepik.com/free-photo/front-view-open-blue-copybook-blank-paper-yellow-blue-surface_140725-64115.jpg?w=1060&t=st=1688859971~exp=1688860571~hmac=3ce2dff06396135c070a9baad2b41809231df60ce3c2cc6f5a60cf97916b566b);
+  background-size: cover;
+  background-position: center;
+  height: 100vh; /* Set the height to 100% viewport height */
+}
+
+  .welcome-heading {
+    font-size: 24px;
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: flex-end;
+    max-width: 100%; /* Ensure the container takes up the full width of the page */
+    margin-left: auto; /* Push the form container to the right */
+    padding-right: 240px;
+    color: aliceblue;
+  }
+  
+  .welcome-text {
+    margin-bottom: 32px;
+    display: flex;
+    justify-content: flex-end;
+    max-width: 100%; /* Ensure the container takes up the full width of the page */
+    margin-left: auto; /* Push the form container to the right */
+    padding-right: 280px;
+    color: aliceblue;
+  }
+  
+  .container {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%; /* Ensure the container takes up the full width of the page */
+  }
+  
+  .login-signup {
+    display: flex;
+    justify-content: flex-end;
+    max-width: 1200px; /* Set a fixed maximum width for the container */
+    width: 100%;
+    margin-left: auto;
+    padding-right: 200px;
+  }
