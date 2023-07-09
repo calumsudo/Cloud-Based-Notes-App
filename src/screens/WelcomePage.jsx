@@ -1,14 +1,31 @@
 import React, { useState } from 'react';
-import './WelcomePage.css'; // Import the CSS file for the component
+import './WelcomePage.css';
 import LoginForm from '../components/auth/LoginForm';
 import SignupForm from '../components/auth/SignupForm';
+import firebase from 'firebase/compat/app'; // Import the 'firebase/app' module
+import 'firebase/compat/functions'; // Import the 'firebase/functions' module
+import { firebaseConfig } from "../firebase"; // Assuming you have a separate firebase.js file with the necessary Firebase configuration
 
-const WelcomePage = () => {
-    const [isLoginForm, setIsLoginForm] = useState(false);
+// Initialize Firebase using the configuration
+firebase.initializeApp(firebaseConfig);
 
-    const handleToggleForm = () => {
-        setIsLoginForm((prevState) => !prevState);
-      };
+const WelcomePage = ({ authUser }) => {
+  const [isLoginForm, setIsLoginForm] = useState(false);
+
+  const handleToggleForm = async () => {
+    setIsLoginForm((prevState) => !prevState);
+
+    try {
+      // Call the Cloud Function to handle authentication and get the redirect URL
+      const handleAuthRedirect = firebase.functions().httpsCallable('handleAuthRedirect');
+      const result = await handleAuthRedirect();
+
+      // Redirect the user to the generated URL
+      window.location.href = result.data.redirectUrl;
+    } catch (error) {
+      console.error('Error handling authentication:', error);
+    }
+  };
 
   return (
     <div className="welcome-page">
@@ -18,7 +35,7 @@ const WelcomePage = () => {
       </p>
       <div className="login-signup">
         {isLoginForm ? (
-          <LoginForm onToggleForm={handleToggleForm} />
+          <LoginForm onToggleForm={handleToggleForm} authUser={authUser} />
         ) : (
           <SignupForm onToggleForm={handleToggleForm} />
         )}

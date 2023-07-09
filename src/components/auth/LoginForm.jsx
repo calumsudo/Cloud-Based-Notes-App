@@ -1,21 +1,35 @@
 import React, {useState} from "react";
 import { auth, provider } from "../../firebase";
+import { functions } from "../../firebase";
 import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import "./Auth.css";
 
-const LoginForm = ({ onToggleForm }) => {
+const LoginForm = ({ onToggleForm, authUser }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const signIn = (e) => {
-      e.preventDefault(); //this prevents a page reload so email and password arent lost from state
-      signInWithEmailAndPassword(auth, email, password)
+    e.preventDefault();
+    signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         console.log("User logged in successfully");
-      }).catch((error) => {
-        console.log(error);
+
+        // Call the handleAuthRedirect Cloud Function
+        const handleAuthRedirect = functions.httpsCallable('handleAuthRedirect');
+        handleAuthRedirect({ uid: authUser.uid })
+          .then((result) => {
+            const redirectUrl = result.data.redirectUrl;
+            window.location.href = redirectUrl;
+          })
+          .catch((error) => {
+            console.error("Error handling authentication:", error);
+          });
       })
-  }
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
 
   const signInWithGoogle = () => {
     signInWithPopup(auth, provider)
