@@ -16,6 +16,8 @@ import {
   collection,
   where,
   addDoc,
+  updateDoc,
+  doc,
 } from "firebase/firestore";
 import { getFunctions, httpsCallable } from "firebase/functions";
 
@@ -65,6 +67,12 @@ const logInWithEmailAndPassword = async (email, password) => {
     console.error(err);
     alert(err.message);
   }
+      // Call the handleAuthRedirect Cloud Function
+      const handleAuthRedirect = httpsCallable(functions, 'handleAuthRedirect');
+      const result = await handleAuthRedirect();
+  
+      // Redirect the user to the generated URL
+      window.location.href = result.data.redirectUrl;
 };
 const registerWithEmailAndPassword = async (name, email, password) => {
   try {
@@ -103,6 +111,66 @@ const logout = async() => {
   }
   
 };
+
+const saveNote = async (content, uid, noteId = null) => {
+  try {
+    const userQuery = query(collection(db, "users"), where("uid", "==", uid));
+    const userQuerySnapshot = await getDocs(userQuery);
+
+    if (userQuerySnapshot.empty) {
+      console.log("User document not found");
+      return;
+    }
+
+    const userDoc = userQuerySnapshot.docs[0];
+    const notesCollectionRef = collection(userDoc.ref, "notes");
+
+    if (noteId) {
+      // Update existing note
+      const noteRef = doc(notesCollectionRef, noteId);
+      await updateDoc(noteRef, {
+        content: content,
+        timestamp: new Date().toISOString(),
+      });
+      console.log("Note updated successfully!");
+    } else {
+      // Create new note
+      await addDoc(notesCollectionRef, {
+        content: content,
+        timestamp: new Date().toISOString(),
+      });
+      console.log("Note created successfully!");
+    }
+  } catch (error) {
+    console.log("Failed to save note!", error);
+  }
+};
+
+const getNotes = async (uid) => {
+  try {
+    const q = query(collection(db, "users"), where("uid", "==", uid));
+    const querySnapshot = await getDocs(q);
+
+    if (querySnapshot.empty) {
+      console.log("User document not found");
+      return [];
+    }
+
+    const userDoc = querySnapshot.docs[0];
+    const notesCollectionRef = collection(userDoc.ref, "notes");
+    const notesQuerySnapshot = await getDocs(notesCollectionRef);
+
+    const notes = notesQuerySnapshot.docs.map((doc) => {
+      return { id: doc.id, ...doc.data() };
+    });
+    return notes;
+  } catch (error) {
+    console.log("Failed to retrieve notes!", error);
+    return [];
+  }
+};
+
+
 export {
   auth,
   db,
@@ -111,4 +179,6 @@ export {
   registerWithEmailAndPassword,
   sendPasswordReset,
   logout,
+  saveNote,
+  getNotes,
 };

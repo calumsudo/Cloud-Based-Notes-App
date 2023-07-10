@@ -1,14 +1,12 @@
 import React from 'react';
-import { logout } from '../firebase';
+import PersistentDrawerLeft from "./Test";
 
 const HomePage = ({authUser}) => {
   const [userDisplayName] = authUser? [`${authUser?.displayName}`]: [''];
 
   return (
     <div>
-      <h2>Welcome {userDisplayName}</h2> {/* Access the authenticated user's display name */}
-
-      <button onClick={logout}>Logout</button>
+      <PersistentDrawerLeft user={userDisplayName} uid={authUser?.uid}/>
     </div>
   );
 };
