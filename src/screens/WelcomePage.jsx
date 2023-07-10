@@ -6,7 +6,7 @@ import SignupForm from '../components/auth/SignupForm';
 const WelcomePage = ({ authUser }) => {
   const [isLoginForm, setIsLoginForm] = useState(false);
 
-  const handleToggleForm = () => {
+  const handleToggleForm = async () => {
     setIsLoginForm((prevState) => !prevState);
   };
 

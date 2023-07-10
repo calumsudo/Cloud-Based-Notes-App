@@ -28,7 +28,9 @@ const App = () => {
           <Route exact path="/home">
             <HomePage authUser={authUser} />
           </Route>
-          <Route exact path="/home/:uid"> {/* Add this route for the redirect URL */}
+          <Route exact path="/home/:uid">
+            {' '}
+            {/* Add this route for the redirect URL */}
             <HomePage authUser={authUser} />
           </Route>
         </Switch>

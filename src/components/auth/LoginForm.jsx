@@ -1,83 +1,40 @@
 import React, {useState} from "react";
-import { auth, provider } from "../../firebase";
-import { functions } from "../../firebase";
-import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { signInWithGoogle, logInWithEmailAndPassword } from "../../firebase";
 import "./Auth.css";
 
-const LoginForm = ({ onToggleForm, authUser }) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+const LoginForm = ({ onToggleForm }) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const signIn = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        console.log("User logged in successfully");
-
-        // Call the handleAuthRedirect Cloud Function
-        const handleAuthRedirect = functions.httpsCallable('handleAuthRedirect');
-        handleAuthRedirect({ uid: authUser.uid })
-          .then((result) => {
-            const redirectUrl = result.data.redirectUrl;
-            window.location.href = redirectUrl;
-          })
-          .catch((error) => {
-            console.error("Error handling authentication:", error);
-          });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    logInWithEmailAndPassword(email, password);
   };
 
-
-  const signInWithGoogle = () => {
-    signInWithPopup(auth, provider)
-  .then((result) => {
-    // This gives you a Google Access Token. You can use it to access the Google API.
-    const credential = GoogleAuthProvider.credentialFromResult(result);
-    const token = credential.accessToken;
-    // The signed-in user info.
-    const user = result.user;
-    // IdP data available using getAdditionalUserInfo(result)
-    // ...
-  }).catch((error) => {
-    // Handle Errors here.
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    // The email of the user's account used.
-    const email = error.customData.email;
-    // The AuthCredential type that was used.
-    const credential = GoogleAuthProvider.credentialFromError(error);
-    // ...
-  });
-  }
-
-
   return (
-    <div className='form-box'>
-      <form className='form' onSubmit={signIn}>
-      <span className="title">Log In</span>
+    <div className="form-box">
+      <form className="form" onSubmit={handleFormSubmit}>
+        <span className="title">Log In</span>
         <span className="subtitle">Glad to have you back!</span>
         <div className="form-container">
-        <input 
-          type='email' 
-          className="input"
-          placeholder='Enter your Email' 
-          value={email} 
-          onChange={(e) => setEmail(e.target.value)}
-          ></input>
-        <input 
-          type='password' 
-          className="input"
-          placeholder='Enter your Password'
-          value={password} 
-          onChange={(e) => setPassword(e.target.value)}
-        ></input>
+          <input
+            type="email"
+            className="input"
+            placeholder="Enter your Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <input
+            type="password"
+            className="input"
+            placeholder="Enter your Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
         </div>
         <button type="submit">Log In</button>
       </form>
-      <div class="form-section">
+      <div className="form-section">
       <p>
           Sign up here:{' '}
           <button className="signupbutton" onClick={onToggleForm}>Sign Up</button>
@@ -93,7 +50,7 @@ const LoginForm = ({ onToggleForm, authUser }) => {
         </p>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default LoginForm;

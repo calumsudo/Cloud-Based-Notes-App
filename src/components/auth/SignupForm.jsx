@@ -1,48 +1,30 @@
 import React, {useState} from "react";
-import { auth, provider } from "../../firebase";
-import { createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { signInWithGoogle, registerWithEmailAndPassword } from "../../firebase";
 import "./Auth.css";
 
 const SignupForm = ({ onToggleForm }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
 
-  const signUp = (e) => {
-      e.preventDefault(); //this prevents a page reload so email and password arent lost from state
-      createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        console.log("User created account successfully");
-      }).catch((error) => {
-        console.log(error);
-      })
-  }
-  const signInWithGoogle = () => {
-    signInWithPopup(auth, provider)
-  .then((result) => {
-    // This gives you a Google Access Token. You can use it to access the Google API.
-    const credential = GoogleAuthProvider.credentialFromResult(result);
-    const token = credential.accessToken;
-    // The signed-in user info.
-    const user = result.user;
-    // IdP data available using getAdditionalUserInfo(result)
-    // ...
-  }).catch((error) => {
-    // Handle Errors here.
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    // The email of the user's account used.
-    const email = error.customData.email;
-    // The AuthCredential type that was used.
-    const credential = GoogleAuthProvider.credentialFromError(error);
-    // ...
-  });
-  }
+  const handleSignupWithEmail = async (e) => {
+    e.preventDefault();
+    registerWithEmailAndPassword(name, email, password);
+  };
+  
   return (
     <div className='form-box'>
-      <form className='form' onSubmit={signUp}>
+      <form className='form' onSubmit={handleSignupWithEmail}>
       <span className="title">Sign up</span>
       <span className="subtitle">Get Ready to Start Taking Notes.</span>
       <div className="form-container">
+      <input 
+          type='name' 
+          className="input"
+          placeholder='Enter your Name' 
+          value={name} 
+          onChange={(e) => setName(e.target.value)}
+          ></input>
         <input 
           type='email' 
           className="input"

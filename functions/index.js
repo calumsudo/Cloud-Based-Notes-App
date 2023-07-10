@@ -11,3 +11,10 @@ exports.handleAuthRedirect = https.onCall(async (data, context) => {
   // Return the redirect URL to the client
   return {redirectUrl};
 });
+
+exports.handleLogout = https.onCall(async () => {
+  const redirectUrl = `https://notes-app-c5a88.web.app/`;
+
+  // Return the redirect URL to the client
+  return {redirectUrl};
+});
