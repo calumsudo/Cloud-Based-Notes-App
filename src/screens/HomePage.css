@@ -1,55 +1,54 @@
 .app-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 80vh;
-  }
-  .btn {
-    --color1: #F7F314;
-    --color2: #c1be35;
-    perspective: 1000px;
-    width: 10em; /* Set width to desired size */
-    height: 10em; /* Set height to match width */
-    background: linear-gradient(var(--color1), var(--color2));
-    border: none;
-    outline: none;
-    font-size: 36px; /* Increase font size for larger text */
-    text-transform: uppercase;
-    letter-spacing: 4px;
-    color: #fff;
-    text-shadow: 0 10px 10px #000;
-    cursor: pointer;
-    transform: rotateX(70deg) rotateZ(30deg);
-    transform-style: preserve-3d;
-    transition: transform 0.5s;
-  }
-  
-  .btn::before {
-    content: "";
-    width: 100%;
-    height: 15px;
-    background-color: var(--color2);
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    transform: rotateX(90deg);
-    transform-origin: bottom;
-  }
-  
-  .btn::after {
-    content: "";
-    width: 15px;
-    height: 100%;
-    background-color: var(--color1);
-    position: absolute;
-    top: 0;
-    right: 0;
-    transform: rotateY(-90deg);
-    transform-origin: right;
-  }
-  
-  .btn:hover {
-    transform: rotateX(30deg) rotateZ(0);
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 80vh;
+}
+.btn {
+  --color1: #f7f314;
+  --color2: #c1be35;
+  perspective: 1000px;
+  width: 10em; /* Set width to desired size */
+  height: 10em; /* Set height to match width */
+  background: linear-gradient(var(--color1), var(--color2));
+  border: none;
+  outline: none;
+  font-size: 36px; /* Increase font size for larger text */
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  color: #fff;
+  text-shadow: 0 10px 10px #000;
+  cursor: pointer;
+  transform: rotateX(70deg) rotateZ(30deg);
+  transform-style: preserve-3d;
+  transition: transform 0.5s;
+}
+
+.btn::before {
+  content: '';
+  width: 100%;
+  height: 15px;
+  background-color: var(--color2);
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  transform: rotateX(90deg);
+  transform-origin: bottom;
+}
+
+.btn::after {
+  content: '';
+  width: 15px;
+  height: 100%;
+  background-color: var(--color1);
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: rotateY(-90deg);
+  transform-origin: right;
+}
+
+.btn:hover {
+  transform: rotateX(30deg) rotateZ(0);
+}
