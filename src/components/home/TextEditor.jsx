@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from '@mui/material';
 import SaveIcon from '@mui/icons-material/Save';
-import { saveNote } from "../../firebase";
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import { saveNote, deleteNote } from "../../firebase";
 import './TextEditor.css';
 
 function TextEditor({ uid, note }) {
-  const [text, setText] = useState(note.context || '');
+  const [text, setText] = useState(note.content || '');
+  const [showTextarea, setShowTextarea] = useState(true);
  
 
   useEffect(() => {
@@ -23,20 +25,27 @@ function TextEditor({ uid, note }) {
     else{
       saveNote(text, uid);
     }
-    
   };
-
-  console.log(note.content);
+  const handleDeleteNote = () => {
+    deleteNote(note.id, uid);
+    setShowTextarea(false);
+  };
+  useEffect(() => {
+    setShowTextarea(true);
+  },[note])
 
   return (
     <div>
       <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '1rem' }}>
-        <Button variant="outlined" startIcon={<SaveIcon />} onClick={handleSave}>
+        <Button variant="contained" startIcon={<SaveIcon />} onClick={handleSave}>
           Save
+        </Button>
+        <Button variant="contained" color="error" startIcon={<DeleteForeverIcon />} onClick={handleDeleteNote}>
+          Delete
         </Button>
       </div>
       <div className="container">
-        <textarea className="textarea" rows="10" value={text} onChange={handleChange} ></textarea>
+        {showTextarea && <textarea className="textarea" rows="10" value={text} onChange={handleChange} ></textarea>}
       </div>
     </div>
   );

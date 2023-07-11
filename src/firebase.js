@@ -18,6 +18,7 @@ import {
   addDoc,
   updateDoc,
   doc,
+  deleteDoc,
 } from "firebase/firestore";
 import { getFunctions, httpsCallable } from "firebase/functions";
 
@@ -141,10 +142,13 @@ const saveNote = async (content, uid, noteId = null) => {
       });
       console.log("Note created successfully!");
     }
+    return 1;
   } catch (error) {
     console.log("Failed to save note!", error);
   }
 };
+
+
 
 const getNotes = async (uid) => {
   try {
@@ -170,7 +174,26 @@ const getNotes = async (uid) => {
   }
 };
 
+const deleteNote = async (noteId, uid) => {
+  try {
+    const userQuery = query(collection(db, 'users'), where('uid', '==', uid));
+    const userQuerySnapshot = await getDocs(userQuery);
 
+    if (userQuerySnapshot.empty) {
+      console.log('User document not found');
+      return;
+    }
+
+    const userDoc = userQuerySnapshot.docs[0];
+    const notesCollectionRef = collection(userDoc.ref, 'notes');
+    const noteRef = doc(notesCollectionRef, noteId);
+
+    await deleteDoc(noteRef);
+    console.log('Note deleted successfully!');
+  } catch (error) {
+    console.log('Failed to delete note!', error);
+  }
+};
 export {
   auth,
   db,
@@ -181,4 +204,5 @@ export {
   logout,
   saveNote,
   getNotes,
+  deleteNote,
 };
