@@ -1,7 +1,9 @@
+// WelcomePage.js
 import React, { useState } from 'react';
 import './WelcomePage.css';
 import LoginForm from '../components/auth/LoginForm';
 import SignupForm from '../components/auth/SignupForm';
+import bg from "../WelcomePageNotes.png";
 
 const WelcomePage = ({ authUser }) => {
   const [isLoginForm, setIsLoginForm] = useState(false);
@@ -11,7 +13,7 @@ const WelcomePage = ({ authUser }) => {
   };
 
   return (
-    <div className="welcome-page">
+    <div className="welcome-page" style={{ backgroundImage: `url(${bg})` }}>
       <h1 className="welcome-heading">Welcome to the Notes App!</h1>
       <p className="welcome-text">
         Please {isLoginForm ? 'log in' : 'sign up'} to get started.

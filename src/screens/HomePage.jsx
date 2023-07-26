@@ -132,9 +132,11 @@ export default function HomePage({authUser}) {
   };
 
   useEffect(() => {
-    getNotes(uid).then((res) => {
-      setNotes(res);
-    })
+    if(uid){
+      getNotes(uid).then((res) => {
+        setNotes(res);
+      })
+    }
     if(notes){
       const titleArr = makeTitle(notes);
       setTitle(titleArr);
